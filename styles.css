@@ -27,10 +27,13 @@ margin-right: 22px;
     font-size: 40px;
 }
 
-
+.chat {
+    
+}
 
 .entra-sala {
     background-color: #DCDCDC;
+   
 }
 
 .mensagem-todos {
@@ -52,6 +55,11 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items:center;
+}
+
+input {
+    outline: 0;
+    border: 0 none;
 }
 
 footer h1 {

@@ -1,6 +1,8 @@
-let usuario = {"name":''};
+let usuario = {name:''};
 let usuarioOnline = false;
+const chat = document.querySelector('.chat');
 entrar();
+pegarMensagens();
 
 
 function entrar() {
@@ -28,20 +30,33 @@ function entraSala() {
     }
 
     function verificaUsuario(){
-        const verifica = axios.get('https://mock-api.driven.com.br/api/v6/uol/status', usuario);
+        const verifica = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', usuario);
         setInterval(verifica, 5000);
     } 
 
-function pegarMensagens(){
-    const mensagens = axios.get('https://mock-api.driven.com.br/api/v6/uol/messages');
-    mensagens.then(printMsg);
+function pegarMensagens(mensagem){
+    axios.get('https://mock-api.driven.com.br/api/v6/uol/messages').then((response) => {
+        const mensagens = response.data;
+        chat.innerHTML =""
+
+        for (let i = 0; i < mensagens.length; i++){
+    const mensagem = mensagens[i];
+    if(mensagem.type) {
+        chat.innerHTML += `
+        <div class="status">
+        <div class="time">(${mensagem.time})</div>
+        <div class="from">(${mensagem.from})</div>
+        <div class="text">(${mensagem.text})</div>
+        </div>`
+    }
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
+
    
 }
 
-
-function printMsg(){
-    
-}
 
 
 
