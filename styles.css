@@ -28,24 +28,52 @@ margin-right: 22px;
 }
 
 .chat {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    size: 14px;
+   
+   
+}
+.from {
     
+    margin-left: 8px;
+}
+strong {
+ font-weight: bold;
+}
+.time {
+    margin-left: 8px;
+    color: #aaaaaa;
 }
 
-.entra-sala {
-    background-color: #DCDCDC;
+.text {
+    margin-left: 8px;
    
 }
 
-.mensagem-todos {
+.status {
+    display:flex;
+    background-color: #DCDCDC;
+    word-break: break-word; 
+    align-items: center;
+    width: 375px;
+    height: 40px;
+    margin-bottom: 4px ;
+   
+}
+
+.message {
     background-color: #ffffff;
 }
 
 .mensagem-reservada {
     background-color: #FFDEDE;
 }
-.sai-sala {
+ /*.sai-sala {
     background-color: #DCDCDC;
-}
+} */
 
 
 footer {
@@ -70,3 +98,6 @@ footer ion-icon{
     font-size: 40px;
     margin-right: 22px;
 }
+
+
+/*.scrollIntoView({behavior: "smooth"});*/
