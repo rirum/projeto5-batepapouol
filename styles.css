@@ -5,6 +5,7 @@ body {
     width: 375px;
     height: 660px;
     background-color: #E5E5E5;
+    overflow: hidden;
    
 }
 header {
@@ -16,7 +17,7 @@ header {
     align-items: center;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
     margin-bottom: 26px;
-    
+    position: fixed;
 }
 
 header img {
@@ -33,7 +34,7 @@ margin-right: 22px;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     size: 14px;
-   
+
    
 }
 .from {
@@ -71,9 +72,7 @@ strong {
 .mensagem-reservada {
     background-color: #FFDEDE;
 }
- /*.sai-sala {
-    background-color: #DCDCDC;
-} */
+
 
 
 footer {
@@ -83,11 +82,17 @@ footer {
     display: flex;
     justify-content: space-between;
     align-items:center;
+    /*position: fixed; */
+    z-index: 2;
 }
 
 input {
     outline: 0;
     border: 0 none;
+    font-style: italic;
+}
+input::placeholder {
+    color:black;
 }
 
 footer h1 {

@@ -34,6 +34,18 @@ function entraSala() {
         setInterval(verifica, 5000);
     } 
 
+    /*isso abaixo funciona? */
+function ultimasMensagens() {
+    axios.get('https://mock-api.driven.com.br/api/v6/uol/messages').then((response) => {
+const msg = response.data;
+if (!ultimasMensagens || msg[msg.lenght - 1].time > ultimasMensagens) {
+    pegarMensagens(mensagem);
+}
+ultimaMsg = msg[msg.lenght - 1].time;
+    });
+}
+
+
 function pegarMensagens(mensagem){
     axios.get('https://mock-api.driven.com.br/api/v6/uol/messages').then((response) => {
         const mensagens = response.data;
@@ -72,9 +84,15 @@ function pegarMensagens(mensagem){
 
    chat.scrollIntoView();
 }
+/* isso nao esta funcionando AINDA */
+function enviarMensagem(){
+    const inputTexto = document.querySelector('input[name="text"]');
+    
+}
 
-
-
+setInterval (() => {
+    pegarMensagens();
+}, 3000);
 
     /** 1- guardar nome em uma variavel OK
      *  2- utilizar nome no chat OK
