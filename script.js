@@ -1,6 +1,4 @@
 let usuario = {name:''};
-let usuarioOnline = false;
-const chat = document.querySelector('.chat');
 entrar();
 pegarMensagens();
 
@@ -8,18 +6,13 @@ pegarMensagens();
 function entrar() {
     let nomeUsuario = window.prompt("Qual é o seu nome?");
     usuario = {"name": nomeUsuario};
-    const entrar = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario);
-    entrar.then(entraSala);
-    entrar.catch(erroSala);
+    axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', usuario)
+   .then((response) => {})
+   .catch((error) => {
+    erroSala();
+   });
 }
 
-
-
-
-function entraSala() {
-    usuarioOnline = true;
-   
-}
 
 
 
@@ -30,23 +23,21 @@ function entraSala() {
     }
 
     function verificaUsuario(){
-        const verifica = axios.post('https://mock-api.driven.com.br/api/v6/uol/status', usuario);
-        setInterval(verifica, 5000);
+        axios.post('https://mock-api.driven.com.br/api/v6/uol/status', usuario)
+        .then((responde)=> {
+
+        }).catch((error) => {
+            entrar();
+        });
     } 
 
-    /*isso abaixo funciona? */
-function ultimasMensagens() {
-    axios.get('https://mock-api.driven.com.br/api/v6/uol/messages').then((response) => {
-const msg = response.data;
-if (!ultimasMensagens || msg[msg.lenght - 1].time > ultimasMensagens) {
-    pegarMensagens(mensagem);
-}
-ultimaMsg = msg[msg.lenght - 1].time;
-    });
-}
+   
 
 
-function pegarMensagens(mensagem){
+
+function pegarMensagens(){
+    const chat = document.querySelector('.chat');
+
     axios.get('https://mock-api.driven.com.br/api/v6/uol/messages').then((response) => {
         const mensagens = response.data;
         chat.innerHTML =""
@@ -78,15 +69,36 @@ function pegarMensagens(mensagem){
         `
     }
         }
+
+        const ultimaMensagem = chat.lastElementChild;
+        ultimaMensagem.scrollIntoView();
     }).catch((error) => {
         console.log(error);
     });
 
-   chat.scrollIntoView();
+   
 }
-/* isso nao esta funcionando AINDA */
+
+
 function enviarMensagem(){
-    const inputTexto = document.querySelector('input[name="text"]');
+    const inputTexto = document.querySelector('input');
+
+    if(inputTexto.value){
+        axios.post('https://mock-api.driven.com.br/api/v6/uol/messages', 
+        {from: usuario.name,
+            to: "Todos",
+            text: inputTexto.value,
+            type: "message"
+
+        })
+        .then((response) => {
+            inputTexto.value = null;
+        })
+        .catch((error)=> {
+            window.location.reload();
+
+        });
+    }
     
 }
 
@@ -94,31 +106,6 @@ setInterval (() => {
     pegarMensagens();
 }, 3000);
 
-    /** 1- guardar nome em uma variavel OK
-     *  2- utilizar nome no chat OK
-     *  3- guardar nome na API
-     *      3.1 - puxar API pro projeto
-     *      3.2 - pegar as respostas da API para o chat
-     *      3.3 - puxar o chat para o projeto
-     * 
-     * Separar as mensagens de sair entrar por type
-Separar msg normal
-Separar msg privada
-Setar msg privada from - from
-Antes modificar css (ver classes novas)
-     
-
-
-    const promise = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants');
-    promise.then(processarResposta);
-
-    function processarResposta(resposta) {
-        console.log(resposta.data);
-    }
-    */
-
-    /**
-     * para saber se o usuário online 3segundos
-     * 
-     * https://mock-api.driven.com.br/api/v6/uol/status
-     */
+setInterval(() => {    
+    verificaUsuario();    
+}, 5000);
